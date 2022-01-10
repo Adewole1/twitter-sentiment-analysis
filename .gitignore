@@ -4,3 +4,4 @@ pickled/
 pickled2/
 migrations/
 *.sqlite3
+static/
