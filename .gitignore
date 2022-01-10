@@ -2,3 +2,5 @@ __pycache__/
 .env
 pickled/
 pickled2/
+migrations/
+*.sqlite3
