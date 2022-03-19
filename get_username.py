@@ -57,6 +57,8 @@ class UserNameText():
         users = user
         userClass = UserId()
         user_ids, user_names = userClass.connect(users)
+        # print(users)
+        # print(user_ids, user_names)
         data = dict()
         for i, j in zip(user_ids, user_names):
             # print('\nFor {}:'.format(j))
@@ -66,6 +68,7 @@ class UserNameText():
             # data = json.dumps(json_response, indent=4, sort_keys=True)
             text_data = list()
             
+            # print(json_response)
             # print(json_response['data'])
             
             # '''
@@ -74,8 +77,11 @@ class UserNameText():
                 text = text.replace("\n", "")
                 # print("\n{}".format(text))
                 text_data.append(text)
+
                 
             data[j] = text_data
+
+
             # print(data)
         return data
             

@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <form action="index" method="post">
+    <form action="{% url 'index' %}" method="post">
         {% csrf_token %}
         <div class="input-group input-group-merge">
             <input type="search" name="searched" class="form-control " placeholder="Input username" aria-label="Search">
@@ -13,8 +13,11 @@
     </form>
 
     <div class="container">
-        {% for object in result %}
-        
+        {% for key, value in result.items %}
+            <h3>{{ key }}</h1>
+            {% for text in value %}
+                <p>{{ text }}</p>
+            {% endfor %}
         {% endfor %}
     </div>
 {% endblock content %}

@@ -10,7 +10,8 @@ from nltk.stem import (PorterStemmer,
 from nltk.corpus import (wordnet, 
                          stopwords)
 from nltk.metrics.scores import (precision,
-                                 recall)
+                                 recall,
+                                 accuracy)
 from statistics import mode
 from sklearn.naive_bayes import (BernoulliNB as BNB, 
                                  MultinomialNB as MNB)
@@ -18,8 +19,6 @@ from sklearn.linear_model import (LogisticRegression as LR,
                                   SGDClassifier as SGDC)
 from sklearn.svm import SVC, LinearSVC
 from sklearn.metrics import precision_score, recall_score, f1_score
-
-
 import pickle
 
 
@@ -318,29 +317,41 @@ training_set = featuresets[400:1400]
 # pickle.dump(voted_classifier, save_classifier)
 # save_classifier.close()
 
+# refsets = collections.defaultdict(set)
+# testsets = collections.defaultdict(set)
+
+# for i, (feats, label) in enumerate(testing_set):
+#     refsets[label].add(i)
+#     observed = voted_classifier.classify(feats)
+#     testsets[observed].add(i)
+    
+# save_classifier = open("pickled2\\ref_set.pickle", "wb")
+# pickle.dump(refsets, save_classifier)
+# save_classifier.close()
+
+# save_classifier = open("pickled2\\test_set.pickle", "wb")
+# pickle.dump(testsets, save_classifier)
+# save_classifier.close()
+
+
 features1 = open("pickled2\\voted_classifier.pickle", "rb")
 voted_classifier = pickle.load(features1)
 features1.close()
 
-refsets = collections.defaultdict(set)
-testsets = collections.defaultdict(set)
+features1 = open("pickled2\\ref_set.pickle", "rb")
+refsets = pickle.load(features1)
+features1.close()
 
-for i, (feats, label) in enumerate(testing_set):
-    refsets[label].add(i)
-    observed = voted_classifier.classify(feats)
-    testsets[observed].add(i)
-    
+features1 = open("pickled2\\test_set.pickle", "rb")
+testsets = pickle.load(features1)
+features1.close()
+
+
 print(len(refsets), len(testsets))
-
-print("Voted classifier Accuracy: ", (nltk.classify.accuracy(voted_classifier, testing_set))*100)
-print('Voted classifier Precision:', precision(refsets['dep'], testsets['dep']))
-print('Voted classifier Recall:', recall(refsets['dep'], testsets['dep']))
-# print('Voted classifier Precision:', precision_score(refsets['pos'], testsets['pos']))
-# print('Voted classifier Recall:', recall_score(refsets['pos'], testsets['pos']))
-# print('Voted classifier Precision:', f1_score(refsets['pos'], testsets['pos']))
-
-
-
+# print("Voted classifier Accuracy: ", (nltk.classify.accuracy(voted_classifier, testing_set))*100)
+print('Voted classifier Precision:', precision(refsets['dep'], testsets['dep'])*100)
+print('Voted classifier Recall:', recall(refsets['dep'], testsets['dep'])*100)
+# print('Voted classifier Accuracy:', accuracy(refsets['dep'], testsets['dep'])*100)
 
 # function to classify tweet, showing the confidence of the classification
 def  sentiment(text):
@@ -349,3 +360,5 @@ def  sentiment(text):
     return voted_classifier.classify(feats), voted_classifier.confidence(feats)
 
 # '''
+
+print(sentiment('I am tired of this life, very tired'))

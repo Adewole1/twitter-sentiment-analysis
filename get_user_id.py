@@ -19,9 +19,10 @@ class UserId():
     def create_url(self, user):
         # Specify the usernames that you want to lookup below
         # You can enter up to 100 comma-separated values.
-        users = user
+        users = user.split(',')
         separator = ','
         usernames = "usernames={}".format(separator.join(users))
+        # print(usernames)
         # usernames = "usernames=TwitterDev,TwitterAPI"
         user_fields = "user.fields=description,created_at"
         # User fields are adjustable, options include:
