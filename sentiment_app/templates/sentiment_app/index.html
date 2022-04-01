@@ -1,23 +1,132 @@
-{% extends 'base.html' %} 
-
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
 
 {% block content %}
-    <form action="{% url 'index' %}" method="post">
-        {% csrf_token %}
-        <div class="input-group input-group-merge">
-            <input type="search" name="searched" class="form-control " placeholder="Input username" aria-label="Search">
-            <button type="submit" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg></button>
+<div class="card rounded-5">
+    <div class="card-body shadow">
+    <div class="d-flex align-items-start bg-light p-2 rounded-2">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <button class="nav-link active me-5 pe-5 text-start" id="tweeter-tab" data-bs-toggle="pill" data-bs-target="#tweeter" type="button" role="tab" aria-controls="tweeter" aria-selected="true">
+                Tweeter
+            </button>
+            <button class="nav-link me-5 pe-5 text-start" id="text-tab" data-bs-toggle="pill" data-bs-target="#text" type="button" role="tab" aria-controls="text" aria-selected="false">
+                Text
+            </button>
         </div>
-    </form>
+        <div class="tab-content w-100" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="tweeter" role="tabpanel" aria-labelledby="tweeter-tab">
+                <form method="GET">
+                    <div class="input-group mb-5">
+                        <input type="search" name="searched" class="form-control me-2" id="names" placeholder="Input username(s)">
+                        <button id="search" type="submit" class="btn btn-primary rounded-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search rounded-2" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+                                <strong>Search</strong>
+                        </button>
+                        <button id="loading" class="btn btn-secondary rounded-3" type="button" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
+                    </div>
 
-    <div class="container">
-        {% for key, value in result.items %}
-            <h3>{{ key }}</h1>
-            {% for text in value %}
-                <p>{{ text }}</p>
-            {% endfor %}
-        {% endfor %}
+                    <div id="loading-large">
+                        <img id="loading-image" src="{% static '/sentiment_app/images/Ball-1s-800px.gif' %}" alt="Loading..." />
+                    </div>                        
+                </form>
+                        
+                <div id="result" class="container">
+                    
+                </div>
+                    
+            </div>
+            <div class="tab-pane fade show" id="text" role="tabpanel" aria-labelledby="text-tab">
+                <form method="GET" class="form-floating">
+                    <div>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Or enter a text here" id="Textarea" style="height: 150px"></textarea>
+                            <label for="Textarea">Enter text here:</label>
+                        </div>
+                        <button id="classify" type="submit" class="btn btn-primary rounded-3 mt-2 float-md-end">
+                            <strong>Classify</strong>
+                        </button>
+                        <button id="loading" class="btn btn-secondary rounded-3  float-md-end" type="button" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
+                    </div>
+                    <div id="loading-large">
+                        <img id="loading-image" src="{% static '/sentiment_app/images/Ball-1s-800px.gif' %}" alt="Loading..." />
+                    </div>
+                    
+            
+                </form>
+                        
+                <div id="result2" class="container">
+                    
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+</div>
+
 {% endblock content %}
+
+{% block domready %}
+$('#search').on('click', function (e) {
+    e.preventDefault();
+    let usernames = $('#names').val();
+    let target_element = $('#result');
+    $('#search').hide();
+    $('#loading').show();
+    $('#loading-large').show();
+
+    $.ajax({
+        url: '{% url "index" %}',
+        type: 'GET',
+        data: {
+            'usernames': usernames,
+            'state': 1
+        },
+        dataType: 'html',
+        success: function(data) {
+            if (data) {
+                target_element.html(data);
+                $('#loading').hide();
+                $('#loading-large').hide();
+                $('#search').show();
+            }
+        }
+    });
+})
+
+$('#classify').on('click', function (e) {
+    e.preventDefault();
+    let text = $('#Textarea').val();
+    let target_element = $('#result2');
+    $('#classify').hide();
+    $('#loading').show();
+    $('#loading-large').show();
+
+    $.ajax({
+        url: '{% url "index" %}',
+        type: 'GET',
+        data: {
+            'text': text,
+            'state': 2
+        },
+        dataType: 'html',
+        success: function(data) {
+            if (data) {
+                target_element.html(data);
+                $('#loading').hide();
+                $('#loading-large').hide();
+                $('#classify').show();
+            }
+        }
+    });
+})
+
+
+{% endblock domready %}

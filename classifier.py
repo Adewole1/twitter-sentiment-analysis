@@ -167,7 +167,7 @@ class VoteClassifier(ClassifierI):
 # documents = pickle.load(docs_f)
 # docs_f.close
 
-docs_f = open("pickled2\\word_features.pickle", "rb")
+docs_f = open("pickled2/word_features.pickle", "rb")
 word_features = pickle.load(docs_f)
 docs_f.close
 
@@ -200,15 +200,16 @@ def find_features(document):
 # word_features = list(all_words.keys())[:10000]
 
 
-features = open("pickled2\\featureset.pickle", "rb")
-featuresets = pickle.load(features)
-features.close()
+# features = open("pickled2/featureset.pickle", "rb")
+# featuresets = pickle.load(features)
+# features.close()
 
-random.shuffle(featuresets)
+# random.shuffle(featuresets)
 
 # divide the featureset into training and testing sets
-testing_set = featuresets[:]
-training_set = featuresets[400:1400]
+# testing_set = featuresets[:]
+# training_set = featuresets[400:1400]
+
 
 # save_featureset = open("pickled2\\training_featureset.pickle", "wb")
 # pickle.dump(training_set, save_featureset)
@@ -301,6 +302,7 @@ training_set = featuresets[400:1400]
 # print("Decision Tree Original Algorithm Recall: ", (recall(classifier, testing_set)))
 
 
+
 # run throough all classifiers and vote for one
 # voted_classifier = VoteClassifier(
 #     classifier_NB,
@@ -309,8 +311,7 @@ training_set = featuresets[400:1400]
 #     BNB_classifier,
 #     LR_classifier,
 #     SGDC_classifier,
-#     SVC_classifier,
-#     # classifier,
+#     SVC_classifier
 # )
 
 # save_classifier = open("pickled2\\voted_classifier.pickle", "wb")
@@ -334,23 +335,23 @@ training_set = featuresets[400:1400]
 # save_classifier.close()
 
 
-features1 = open("pickled2\\voted_classifier.pickle", "rb")
+features1 = open("pickled2/voted_classifier.pickle", "rb")
 voted_classifier = pickle.load(features1)
 features1.close()
 
-features1 = open("pickled2\\ref_set.pickle", "rb")
+features1 = open("pickled2/ref_set.pickle", "rb")
 refsets = pickle.load(features1)
 features1.close()
 
-features1 = open("pickled2\\test_set.pickle", "rb")
+features1 = open("pickled2/test_set.pickle", "rb")
 testsets = pickle.load(features1)
 features1.close()
 
 
-print(len(refsets), len(testsets))
+# print(len(refsets), len(testsets))
 # print("Voted classifier Accuracy: ", (nltk.classify.accuracy(voted_classifier, testing_set))*100)
-print('Voted classifier Precision:', precision(refsets['dep'], testsets['dep'])*100)
-print('Voted classifier Recall:', recall(refsets['dep'], testsets['dep'])*100)
+# print('Voted classifier Precision:', precision(refsets['dep'], testsets['dep'])*100)
+# print('Voted classifier Recall:', recall(refsets['dep'], testsets['dep'])*100)
 # print('Voted classifier Accuracy:', accuracy(refsets['dep'], testsets['dep'])*100)
 
 # function to classify tweet, showing the confidence of the classification
@@ -361,4 +362,5 @@ def  sentiment(text):
 
 # '''
 
-print(sentiment('I am tired of this life, very tired'))
+# print(sentiment("I am alone, I am depressed,  no one cares.  Help"))
+

@@ -1,0 +1,6 @@
+{% for key, values in result.items %}
+    <h1>{{ key }}</h1>
+    {% for value in values %}
+        <p>{{ value.0 }} - <strong>{{ value.1 }}</strong></p>
+    {% endfor %} 
+{% endfor %}
