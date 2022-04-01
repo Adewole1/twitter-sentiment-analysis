@@ -18,7 +18,7 @@
             <div class="tab-pane fade show active" id="tweeter" role="tabpanel" aria-labelledby="tweeter-tab">
                 <form method="GET">
                     <div class="input-group mb-5">
-                        <input type="search" name="searched" class="form-control me-2" id="names" placeholder="Input username(s)">
+                        <input id="names" type="search" name="searched" class="form-control me-2" placeholder="Input username(s)">
                         <button id="search" type="submit" class="btn btn-primary rounded-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search rounded-2" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
@@ -35,7 +35,11 @@
                     </div>                        
                 </form>
                         
-                <div id="result" class="container">
+                <div id="result" class="">
+                    <div class="d-flex justify-content-center">
+                        <hr class="mb-4 w-100 text-muted" style="margin-top:-30px;">
+                    </div>
+                    <textarea name="result" class="w-100 overflow-auto" style="height:400px; resize:none;" disabled></textarea>
                     
                 </div>
                     
@@ -44,7 +48,7 @@
                 <form method="GET" class="form-floating">
                     <div>
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="Or enter a text here" id="Textarea" style="height: 150px"></textarea>
+                            <textarea id="Textarea" class="form-control" placeholder="Or enter a text here" style="height: 150px"></textarea>
                             <label for="Textarea">Enter text here:</label>
                         </div>
                         <button id="classify" type="submit" class="btn btn-primary rounded-3 mt-2 float-md-end">
@@ -62,7 +66,7 @@
             
                 </form>
                         
-                <div id="result2" class="container">
+                <div id="result2" class="container overflow-auto">
                     
                 </div>
             </div>
@@ -96,6 +100,7 @@ $('#search').on('click', function (e) {
                 $('#loading').hide();
                 $('#loading-large').hide();
                 $('#search').show();
+                $('#names').val("");
             }
         }
     });
@@ -123,6 +128,7 @@ $('#classify').on('click', function (e) {
                 $('#loading').hide();
                 $('#loading-large').hide();
                 $('#classify').show();
+                $('#Textarea').val("");
             }
         }
     });
