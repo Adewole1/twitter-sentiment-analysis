@@ -12,6 +12,12 @@ from classifier import sentiment
 import sys
 sys.modules['classifier'] = classifier
 
+classes = {
+    'dep': 'Depressing',
+    'not': 'Not depressing',
+    'neu': 'Neutral'
+}
+
 class IndexView(TemplateView):
     template_name = "index.html"
     
@@ -32,7 +38,7 @@ def search_user(request):
                 for name in data.keys():
                     analysis = []
                     for text in data[name]:
-                        analysis.append((text, sentiment(text)[0]))
+                        analysis.append((text, classes[sentiment(text)[0]]))
                     data[name] = analysis
                     
                 html_response = render_to_string('sentiment_app/user_result.html', context = {'result': data})
@@ -42,11 +48,15 @@ def search_user(request):
         elif int(state) == 2:
             text = request.GET.get('text')
             if text:
-                data = sentiment(text)
+                data = classes[sentiment(text)[0]]
+                data = {
+                    text: data
+                }
                 
                 html_response = render_to_string('sentiment_app/text_result.html', context = {'result': data})
             
                 return HttpResponse(html_response, status=200)
+            
     else:
         return render(request, 'sentiment_app/index.html',
                     {})

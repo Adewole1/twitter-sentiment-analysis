@@ -22,7 +22,7 @@
                         <button id="search" type="submit" class="btn btn-primary rounded-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search rounded-2" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
-                                <strong>Search</strong>
+                                Search
                         </button>
                         <button id="loading" class="btn btn-secondary rounded-3" type="button" disabled>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -31,15 +31,11 @@
                     </div>
 
                     <div id="loading-large">
-                        <img id="loading-image" src="{% static '/sentiment_app/images/Ball-1s-800px.gif' %}" alt="Loading..." />
+                        <img id="loading-image2" src="{% static '/sentiment_app/images/Ball-1s-800px.gif' %}" alt="Loading..." />
                     </div>                        
                 </form>
                         
                 <div id="result" class="">
-                    <div class="d-flex justify-content-center">
-                        <hr class="mb-4 w-100 text-muted" style="margin-top:-30px;">
-                    </div>
-                    <textarea name="result" class="w-100 overflow-auto" style="height:400px; resize:none;" disabled></textarea>
                     
                 </div>
                     
@@ -48,18 +44,18 @@
                 <form method="GET" class="form-floating">
                     <div>
                         <div class="form-floating">
-                            <textarea id="Textarea" class="form-control" placeholder="Or enter a text here" style="height: 150px"></textarea>
+                            <textarea id="Textarea" class="form-control" placeholder="Or enter a text here"></textarea>
                             <label for="Textarea">Enter text here:</label>
                         </div>
                         <button id="classify" type="submit" class="btn btn-primary rounded-3 mt-2 float-md-end">
                             <strong>Classify</strong>
                         </button>
-                        <button id="loading" class="btn btn-secondary rounded-3  float-md-end" type="button" disabled>
+                        <button id="loading2" class="btn btn-secondary rounded-3 float-md-end" type="button" disabled>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Loading...
                         </button>
                     </div>
-                    <div id="loading-large">
+                    <div id="loading-large2">
                         <img id="loading-image" src="{% static '/sentiment_app/images/Ball-1s-800px.gif' %}" alt="Loading..." />
                     </div>
                     
@@ -78,60 +74,75 @@
 {% endblock content %}
 
 {% block domready %}
+$('#tweeter-tab').on('click', function() {
+    $('#names').val("");
+    $('#Textarea').val("");
+})
+
+$('#text-tab').on('click', function() {
+    $('#names').val("");
+    $('#Textarea').val("");
+})
+
 $('#search').on('click', function (e) {
     e.preventDefault();
     let usernames = $('#names').val();
     let target_element = $('#result');
-    $('#search').hide();
-    $('#loading').show();
-    $('#loading-large').show();
+    
 
-    $.ajax({
-        url: '{% url "index" %}',
-        type: 'GET',
-        data: {
-            'usernames': usernames,
-            'state': 1
-        },
-        dataType: 'html',
-        success: function(data) {
-            if (data) {
-                target_element.html(data);
-                $('#loading').hide();
-                $('#loading-large').hide();
-                $('#search').show();
-                $('#names').val("");
+    if (usernames !== "") {
+        $('#search').hide();
+        $('#loading').show();
+        $('#loading-large').show();
+        $.ajax({
+            url: '{% url "index" %}',
+            type: 'GET',
+            data: {
+                'usernames': usernames,
+                'state': 1
+            },
+            dataType: 'html',
+            success: function(data) {
+                if (data) {
+                    target_element.html(data);
+                    $('#loading').hide();
+                    $('#loading-large').hide();
+                    $('#search').show();
+                    $('#names').val("");
+                }
             }
-        }
-    });
+        });
+    }
 })
 
 $('#classify').on('click', function (e) {
     e.preventDefault();
     let text = $('#Textarea').val();
     let target_element = $('#result2');
-    $('#classify').hide();
-    $('#loading').show();
-    $('#loading-large').show();
+    if (text !== "") {
+        $('#classify').hide();
+        $('#loading2').show();
+        $('#loading-large2').show();
 
-    $.ajax({
-        url: '{% url "index" %}',
-        type: 'GET',
-        data: {
-            'text': text,
-            'state': 2
-        },
-        dataType: 'html',
-        success: function(data) {
-            if (data) {
-                target_element.html(data);
-                $('#loading').hide();
-                $('#loading-large').hide();
-                $('#classify').show();
-                $('#Textarea').val("");
+        $.ajax({
+            url: '{% url "index" %}',
+            type: 'GET',
+            data: {
+                'text': text,
+                'state': 2
+            },
+            dataType: 'html',
+            success: function(data) {
+                if (data) {
+                    target_element.html(data);
+                    $('#loading2').hide();
+                    $('#loading-large2').hide();
+                    $('#classify').show();
+                    $('#Textarea').val("");
+                }
             }
-        }
-    });
+        });
+    }
 })
 
 

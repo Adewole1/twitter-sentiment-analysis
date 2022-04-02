@@ -1,3 +1,5 @@
-<h3>
-    {{ result.0 }} - <strong>{{ result.1 }}</strong>
-</h3>
+{% for key,values in result.items %}
+    <p>
+        {{ key }} - <strong>{{ values }}</strong>
+    </p>
+{% endfor %}
