@@ -30,9 +30,7 @@
                         </button>
                     </div>
 
-                    <div id="loading-large">
-                        <img id="loading-image2" src="{% static '/sentiment_app/images/Ball-1s-800px.gif' %}" alt="Loading..." />
-                    </div>                        
+                                        
                 </form>
                         
                 <div id="result" class="">
@@ -55,9 +53,6 @@
                             Loading...
                         </button>
                     </div>
-                    <div id="loading-large2">
-                        <img id="loading-image" src="{% static '/sentiment_app/images/Ball-1s-800px.gif' %}" alt="Loading..." />
-                    </div>
                     
             
                 </form>
@@ -70,6 +65,9 @@
     </div>
 </div>
 </div>
+<div id="loading-large">
+    <img id="loading-image2" src="{% static 'sentiment_app/images/Ball-1s-800px.gif' %}" alt="Loading..." />
+</div>    
 
 {% endblock content %}
 
@@ -122,7 +120,7 @@ $('#classify').on('click', function (e) {
     if (text !== "") {
         $('#classify').hide();
         $('#loading2').show();
-        $('#loading-large2').show();
+        $('#loading-large').show();
 
         $.ajax({
             url: '{% url "index" %}',
@@ -136,7 +134,7 @@ $('#classify').on('click', function (e) {
                 if (data) {
                     target_element.html(data);
                     $('#loading2').hide();
-                    $('#loading-large2').hide();
+                    $('#loading-large').hide();
                     $('#classify').show();
                     $('#Textarea').val("");
                 }

@@ -3,6 +3,45 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import requests
+
+def is_ec2_linux():
+    """Detect if we are running on an EC2 Linux Instance
+   See http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/identify_ec2_instances.html
+    """
+    if os.path.isfile("/sys/hypervisor/uuid"):
+        with open("/sys/hypervisor/uuid") as f:
+            uuid = f.read()
+            return uuid.startswith("ec2")
+    return False
+
+def get_token():
+    """Set the autorization token to live for 6 hours (maximum)"""
+    headers = {
+        'X-aws-ec2-metadata-token-ttl-seconds': '21600',
+    }
+    response = requests.put('http://169.254.169.254/latest/api/token', headers=headers)
+    return response.text
+
+
+def get_linux_ec2_private_ip():
+    """Get the private IP Address of the machine if running on an EC2 linux server.
+See https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html"""
+
+    if not is_ec2_linux():
+        return None
+    try:
+        token = get_token()
+        headers = {
+            'X-aws-ec2-metadata-token': f"{token}",
+        }
+        response = requests.get('http://169.254.169.254/latest/meta-data/local-ipv4', headers=headers)
+        return response.text
+    except:
+        return None
+    finally:
+        if response:
+            response.close()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,21 +58,24 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = []
+private_ip = get_linux_ec2_private_ip()
+if private_ip:
+    ALLOWED_HOSTS = ['tweeter.eba-bp2xj7dw.us-west-2.elasticbeanstalk.com']
+    DEBUG = False
+    ALLOWED_HOSTS.append(private_ip)
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'sentiment_app.apps.SentimentAppConfig',
+    'django_bootstrap5',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'django_bootstrap5',
-    
 ]
 
 MIDDLEWARE = [
@@ -102,7 +144,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'
 
 USE_I18N = True
 
@@ -113,13 +155,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 STATIC_URL = '/static/'
-STATIC_ROOT= os.path.join(BASE_DIR,'staticfiles')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
