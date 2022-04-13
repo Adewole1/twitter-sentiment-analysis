@@ -1,147 +1,222 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load django_bootstrap5 %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% load django_bootstrap5 %} 
 
 {% block content %}
 <div class="card rounded-5">
-    <div class="card-body shadow">
+  <div class="card-body shadow">
     <div class="d-flex align-items-start bg-light p-2 rounded-2">
-        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <button class="nav-link active me-5 pe-5 text-start" id="tweeter-tab" data-bs-toggle="pill" data-bs-target="#tweeter" type="button" role="tab" aria-controls="tweeter" aria-selected="true">
-                Tweeter
-            </button>
-            <button class="nav-link me-5 pe-5 text-start" id="text-tab" data-bs-toggle="pill" data-bs-target="#text" type="button" role="tab" aria-controls="text" aria-selected="false">
-                Text
-            </button>
-        </div>
-        <div class="tab-content w-100" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="tweeter" role="tabpanel" aria-labelledby="tweeter-tab">
-                <form method="GET">
-                    <div class="input-group mb-5">
-                        <input id="names" type="search" name="searched" class="form-control me-2" placeholder="Input username(s)">
-                        <button id="search" type="submit" class="btn btn-primary rounded-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search rounded-2" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
-                                Search
-                        </button>
-                        <button id="loading" class="btn btn-secondary rounded-3" type="button" disabled>
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>
-                    </div>
+      <div
+        class="nav flex-column nav-pills me-3"
+        id="v-pills-tab"
+        role="tablist"
+        aria-orientation="vertical"
+      >
+        <button
+          class="nav-link active me-5 pe-5 text-start"
+          id="tweeter-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#tweeter"
+          type="button"
+          role="tab"
+          aria-controls="tweeter"
+          aria-selected="true"
+        >
+          Tweeter
+        </button>
+        <button
+          class="nav-link me-5 pe-5 text-start"
+          id="text-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#text"
+          type="button"
+          role="tab"
+          aria-controls="text"
+          aria-selected="false"
+        >
+          Text
+        </button>
+      </div>
+      <div class="tab-content w-100" id="v-pills-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="tweeter"
+          role="tabpanel"
+          aria-labelledby="tweeter-tab"
+        >
+          <form method="GET">
+            <div class="input-group mb-5">
+              <input
+                id="names"
+                type="search"
+                name="searched"
+                class="form-control me-2"
+                placeholder="Input username(s)"
+              />
+              <button
+                id="search"
+                type="submit"
+                class="btn btn-primary rounded-3"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-search rounded-2"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                  />
+                </svg>
+                Search
+              </button>
+              <button
+                id="loading"
+                class="btn btn-secondary rounded-3"
+                type="button"
+                disabled
+              >
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Loading...
+              </button>
+            </div>
+          </form>
 
-                                        
-                </form>
-                        
-                <div id="result" class="">
-                    
-                </div>
-                    
-            </div>
-            <div class="tab-pane fade show" id="text" role="tabpanel" aria-labelledby="text-tab">
-                <form method="GET" class="form-floating">
-                    <div>
-                        <div class="form-floating">
-                            <textarea id="Textarea" class="form-control" placeholder="Or enter a text here"></textarea>
-                            <label for="Textarea">Enter text here:</label>
-                        </div>
-                        <button id="classify" type="submit" class="btn btn-primary rounded-3 mt-2 float-md-end">
-                            <strong>Classify</strong>
-                        </button>
-                        <button id="loading2" class="btn btn-secondary rounded-3 float-md-end" type="button" disabled>
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>
-                    </div>
-                    
-            
-                </form>
-                        
-                <div id="result2" class="container overflow-auto">
-                    
-                </div>
-            </div>
+          <div id="result" class=""></div>
         </div>
+        <div
+          class="tab-pane fade show"
+          id="text"
+          role="tabpanel"
+          aria-labelledby="text-tab"
+        >
+          <form method="GET" class="form-floating">
+            <div>
+              <div class="form-floating">
+                <textarea
+                  id="Textarea"
+                  class="form-control"
+                  placeholder="Or enter a text here"
+                ></textarea>
+                <label for="Textarea">Enter text here:</label>
+              </div>
+              <button
+                id="classify"
+                type="submit"
+                class="btn btn-primary rounded-3 mt-2 float-md-end"
+              >
+                <strong>Classify</strong>
+              </button>
+              <button
+                id="loading2"
+                class="btn btn-secondary rounded-3 float-md-end"
+                type="button"
+                disabled
+              >
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Loading...
+              </button>
+            </div>
+          </form>
+
+          <div id="result2" class="container overflow-auto"></div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-</div>
+
 <div id="loading-large">
-    <img id="loading-image2" src="{% static 'sentiment_app/images/Ball-1s-800px.gif' %}" alt="Loading..." />
-</div>    
+  <img
+    id="loading-image2"
+    src="{% static 'sentiment_app/images/Ball-1s-800px.gif' %}"
+    alt="Loading..."
+  />
+</div>
 
-{% endblock content %}
+{% endblock content %} 
 
-{% block domready %}
-$('#tweeter-tab').on('click', function() {
+{% block domready %} 
+$('#tweeter-tab').on('click', function() { 
+    $('#names').val(""); 
+    $('#Textarea').val(""); })
+
+$('#text-tab').on('click', function() { 
     $('#names').val("");
-    $('#Textarea').val("");
-})
-
-$('#text-tab').on('click', function() {
-    $('#names').val("");
-    $('#Textarea').val("");
-})
-
-$('#search').on('click', function (e) {
-    e.preventDefault();
-    let usernames = $('#names').val();
-    let target_element = $('#result');
+    $('#Textarea').val(""); }) 
     
-
-    if (usernames !== "") {
-        $('#search').hide();
+$('#search').on('click', function (e) {
+    e.preventDefault(); 
+    let usernames = $('#names').val(); 
+    let target_element =
+    $('#result'); 
+    if (usernames !== "") { 
+        $('#search').hide(); 
         $('#loading').show();
-        $('#loading-large').show();
-        $.ajax({
-            url: '{% url "index" %}',
+        $('#loading-large').show(); 
+        $.ajax({ 
+            url: '{% url "index" %}', 
             type: 'GET',
-            data: {
-                'usernames': usernames,
-                'state': 1
-            },
-            dataType: 'html',
-            success: function(data) {
-                if (data) {
-                    target_element.html(data);
+            data: { 'usernames': usernames, 'state': 1 }, 
+            dataType: 'html', 
+            success: function(data) { 
+                if (data) { 
+                    target_element.html(data); 
                     $('#loading').hide();
-                    $('#loading-large').hide();
-                    $('#search').show();
-                    $('#names').val("");
-                }
-            }
-        });
-    }
-})
-
-$('#classify').on('click', function (e) {
-    e.preventDefault();
-    let text = $('#Textarea').val();
-    let target_element = $('#result2');
-    if (text !== "") {
-        $('#classify').hide();
-        $('#loading2').show();
-        $('#loading-large').show();
-
-        $.ajax({
-            url: '{% url "index" %}',
-            type: 'GET',
-            data: {
-                'text': text,
-                'state': 2
+                    $('#loading-large').hide(); 
+                    $('#search').show(); 
+                    $('#names').val(""); 
+                } 
             },
-            dataType: 'html',
-            success: function(data) {
-                if (data) {
-                    target_element.html(data);
-                    $('#loading2').hide();
-                    $('#loading-large').hide();
-                    $('#classify').show();
-                    $('#Textarea').val("");
-                }
-            }
-        });
-    }
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                $('#loading').hide();
+                $('#loading-large').hide(); 
+                $('#search').show();
+            } 
+        }); 
+    } 
 })
 
-
+$('#classify').on('click', function (e) { 
+    e.preventDefault(); 
+    let text = $('#Textarea').val(); 
+    let target_element = $('#result2'); 
+    if (text !== "") {
+        $('#classify').hide(); 
+        $('#loading2').show(); 
+        $('#loading-large').show();
+        $.ajax({ 
+            url: '{% url "index" %}', 
+            type: 'GET', 
+            data: { 
+                'text': text, 'state': 2
+            }, 
+            dataType: 'html', 
+            success: function(data) { 
+                if (data) {
+                    target_element.html(data); 
+                    $('#loading2').hide(); 
+                    $('#loading-large').hide();
+                    $('#classify').show(); 
+                    $('#Textarea').val(""); 
+                } 
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                $('#loading2').hide();
+                $('#loading-large').hide(); 
+                $('#classify').show();
+            } 
+        }); 
+    } 
+}) 
 {% endblock domready %}

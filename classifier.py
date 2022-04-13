@@ -167,7 +167,7 @@ class VoteClassifier(ClassifierI):
 # documents = pickle.load(docs_f)
 # docs_f.close
 
-docs_f = open("pickled2/word_features.pickle", "rb")
+docs_f = open("/home/ubuntu/project_codebase/pickled2/word_features.pickle", "rb")
 word_features = pickle.load(docs_f)
 docs_f.close
 
@@ -335,17 +335,17 @@ def find_features(document):
 # save_classifier.close()
 
 
-features1 = open("pickled2/voted_classifier.pickle", "rb")
+features1 = open("/home/ubuntu/project_codebase/pickled2/voted_classifier.pickle", "rb")
 voted_classifier = pickle.load(features1)
 features1.close()
 
-features1 = open("pickled2/ref_set.pickle", "rb")
-refsets = pickle.load(features1)
-features1.close()
+# features1 = open("pickled2/ref_set.pickle", "rb")
+# refsets = pickle.load(features1)
+# features1.close()
 
-features1 = open("pickled2/test_set.pickle", "rb")
-testsets = pickle.load(features1)
-features1.close()
+# features1 = open("pickled2/test_set.pickle", "rb")
+# testsets = pickle.load(features1)
+# features1.close()
 
 
 # print(len(refsets), len(testsets))

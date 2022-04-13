@@ -60,9 +60,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 private_ip = get_linux_ec2_private_ip()
 if private_ip:
-    ALLOWED_HOSTS = ['tweeter.eba-bp2xj7dw.us-west-2.elasticbeanstalk.com']
+    # ALLOWED_HOSTS.append(private_ip)
+    ALLOWED_HOSTS = ['52.54.106.202']
     DEBUG = False
-    ALLOWED_HOSTS.append(private_ip)
+    STATIC_ROOT = '/var/www/sentiment_web/assets/'
 
 
 # Application definition
@@ -156,7 +157,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
