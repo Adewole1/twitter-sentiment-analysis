@@ -3,11 +3,12 @@
 {% load django_bootstrap5 %} 
 
 {% block content %}
+
 <div class="card rounded-5">
   <div class="card-body shadow">
     <div class="d-flex align-items-start bg-light p-2 rounded-2">
       <div
-        class="nav flex-column nav-pills me-3"
+        class="nav flex-column nav-pills me-1"
         id="v-pills-tab"
         role="tablist"
         aria-orientation="vertical"
@@ -50,13 +51,13 @@
                 id="names"
                 type="search"
                 name="searched"
-                class="form-control me-2"
+                class="form-control me-2 mb-1 col-md-12"
                 placeholder="Input username(s)"
               />
               <button
                 id="search"
                 type="submit"
-                class="btn btn-primary rounded-3"
+                class="btn btn-primary rounded-3 mb-1 col-md-2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +75,7 @@
               </button>
               <button
                 id="loading"
-                class="btn btn-secondary rounded-3"
+                class="btn btn-secondary rounded-3 mb-1 col-md-2"
                 type="button"
                 disabled
               >
@@ -88,7 +89,6 @@
             </div>
           </form>
 
-          <div id="result" class=""></div>
         </div>
         <div
           class="tab-pane fade show"
@@ -109,13 +109,13 @@
               <button
                 id="classify"
                 type="submit"
-                class="btn btn-primary rounded-3 mt-2 float-md-end"
+                class="btn btn-primary rounded-3 mt-1 float-end"
               >
                 <strong>Classify</strong>
               </button>
               <button
                 id="loading2"
-                class="btn btn-secondary rounded-3 float-md-end"
+                class="btn btn-secondary rounded-3 mt-1 float-end"
                 type="button"
                 disabled
               >
@@ -129,24 +129,27 @@
             </div>
           </form>
 
-          <div id="result2" class="container overflow-auto"></div>
         </div>
       </div>
     </div>
+    <div id="result" class="container bg-light"></div>
+    <div id="result2" class="container bg-light overflow-auto"></div>
   </div>
 </div>
 
 <div id="loading-large">
-  <img
-    id="loading-image2"
-    src="{% static 'sentiment_app/images/Ball-1s-800px.gif' %}"
-    alt="Loading..."
-  />
+  <div class="d-flex justify-content-center">
+    <div class="spinner-grow" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 </div>
 
 {% endblock content %} 
 
-{% block domready %} 
+{% block domready %}
+$("#staticBackdrop2").modal('show');
+
 $('#tweeter-tab').on('click', function() { 
     $('#names').val(""); 
     $('#Textarea').val(""); })
@@ -158,8 +161,8 @@ $('#text-tab').on('click', function() {
 $('#search').on('click', function (e) {
     e.preventDefault(); 
     let usernames = $('#names').val(); 
-    let target_element =
-    $('#result'); 
+    let target_element = $('#result');
+    $('#result2').empty();
     if (usernames !== "") { 
         $('#search').hide(); 
         $('#loading').show();
@@ -182,8 +185,9 @@ $('#search').on('click', function (e) {
                 $('#loading').hide();
                 $('#loading-large').hide(); 
                 $('#search').show();
-            } 
-        }); 
+                alert(errorThrown + "\nCheck username, or\nCheck network and try again.");
+            }
+        });
     } 
 })
 
@@ -191,6 +195,7 @@ $('#classify').on('click', function (e) {
     e.preventDefault(); 
     let text = $('#Textarea').val(); 
     let target_element = $('#result2'); 
+    $('#result').empty();
     if (text !== "") {
         $('#classify').hide(); 
         $('#loading2').show(); 
@@ -215,6 +220,7 @@ $('#classify').on('click', function (e) {
                 $('#loading2').hide();
                 $('#loading-large').hide(); 
                 $('#classify').show();
+                alert(errorThrown + "\nCheck network and try again.");
             } 
         }); 
     } 

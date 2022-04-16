@@ -14,8 +14,8 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-dark mb-4" >
-        <a href="{% url 'index' %}" class="container-fluid navbar-brand">Tweeter Analysis</a>
+    <nav class="navbar navbar-expand-lg navbar-dark container-fluid mb-4" >
+        <a href="{% url 'index' %}" class="navbar-brand">Tweeter Analysis</a>
         
         <button class="navbar-toggler" type="button" 
         data-toggle="collapse" data-target="#navbarCollapse" 
@@ -25,31 +25,57 @@
         </button>
     </nav>
 
-    <div class="container">
+    <div class="container-sm">
         {% block content %}
         {% endblock content %}
     </div>
+   
 
     <footer class="footer mt-auto py-3 bg-light text-center">
         <span class="text-muted">
-            Copyright 2022. <a href="" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Disclaimer</a>
+            Copyright 2022. 
+            <a href="" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Disclaimer</a>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+              </svg>
+            <a href="" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">About</a>
         </span>
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Disclaimer</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-start">
-                    <p>While this project is not for fun, we do not acknowledge the accuracy of using this web application especially when used in life situations. It remains a work in progress as such.</p>
-                    <p>Also, no data, whether text or username(s), is saved during the use of this application.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Understood</button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Disclaimer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                        <p>While this project is not for fun, we do not acknowledge the accuracy of using this web application especially when used in life situations. It remains a work in progress as such.</p>
+                        <p>Also, no data, whether text or username(s), is saved during the use of this application.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-bs-target="#staticBackdrop2" data-bs-toggle="modal" data-bs-dismiss="modal">About</button>
+                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Understood</button>
+                    </div>
                 </div>
             </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Notice</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                        <p>This is the project work of Ayoola Folami, you can reach him on twitter @<a class="text-decoration-none" href="https://twitter.com/ayofolamiii" target="_blank">ayofolamiii</a>. All research and coding by Michael Adedayo, you can reach him on @<a class="text-decoration-none" href="https://twitter.com/AyoWole01"  target="_blank">AyoWole01</a></p>
+                        <p>This web app gets the last 10 tweets of twitter usernames and determines whether they are depressing or not. More than one username can be enterred and separated by comma(','). Or you can just enter text, thoughts in the text tab to analyse it.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-bs-target="#staticBackdrop" data-bs-toggle="modal" data-bs-dismiss="modal">Disclaimer</button>
+                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Understood</button>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
